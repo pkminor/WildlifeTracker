@@ -9,15 +9,18 @@ import java.util.List;
 public class Sql2oEndangeredAnimalDao implements EndangeredAnimalDao {
 
     private final Sql2o sql2o;
+    public static final String RECORD_TYPE = "endangered";
+
     public Sql2oEndangeredAnimalDao(Sql2o sql2o) {
         this.sql2o=sql2o;
     }
 
     @Override
     public List<EndangeredAnimal> getAllEndangeredAnimals() {
-        String sql ="select * from animals where type='endangered' ";
+        String sql ="select * from animals where type=:type";
         try(Connection con =  sql2o.open()){
             return con.createQuery(sql)
+                    .addParameter("type",RECORD_TYPE)
                     .executeAndFetch(EndangeredAnimal.class);
         }
     }
@@ -64,9 +67,10 @@ public class Sql2oEndangeredAnimalDao implements EndangeredAnimalDao {
 
     @Override
     public void clearAllEndangeredAnimals() {
-        String sql ="delete from animals where type='endangered'";
+        String sql ="delete from animals where type=:type";
         try(Connection con = sql2o.open()){
             con.createQuery(sql)
+                    .addParameter("type",RECORD_TYPE)
                     .executeUpdate();
         }
     }

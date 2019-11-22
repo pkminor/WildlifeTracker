@@ -9,16 +9,19 @@ import java.util.List;
 public class Sql2oAnimalDao implements  AnimalDao{
 
     private final Sql2o sql2o;
+    public  static final String RECORD_TYPE="animal";
+
     public Sql2oAnimalDao(Sql2o sql2o) {
         this.sql2o=sql2o;
     }
 
     @Override
     public List<Animal> getAllAnimals() {
-        String sql ="select * from animals where type='animal' ";
+        String sql ="select * from animals where type=:type ";
         try(Connection con = sql2o.open()){
             return con.createQuery(sql)
                     .throwOnMappingFailure(false)
+                    .addParameter("type",RECORD_TYPE)
                     .executeAndFetch(Animal.class);
         }
     }
@@ -29,7 +32,7 @@ public class Sql2oAnimalDao implements  AnimalDao{
         try(Connection con = sql2o.open()){
             int id = (int) con.createQuery(sql,true)
                     .addParameter("name",animal.getName())
-                    .addParameter("type",animal.getType())
+                    .addParameter("type",RECORD_TYPE)
                     .executeUpdate()
                     .getKey();
             animal.setId(id);
@@ -62,9 +65,10 @@ public class Sql2oAnimalDao implements  AnimalDao{
 
     @Override
     public void clearAllAnimals() {
-        String sql = "delete from animals where type='animal'";
+        String sql = "delete from animals where type=:type";
         try(Connection con = sql2o.open()){
             con.createQuery(sql)
+                    .addParameter("type",RECORD_TYPE)
                .executeUpdate();
         }
     }

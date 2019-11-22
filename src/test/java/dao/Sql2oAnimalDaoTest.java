@@ -99,5 +99,5 @@ public class Sql2oAnimalDaoTest {
         assertEquals(0,animalDao.getAllAnimals().size());
     }
 
-    private Animal setupAnimal(){return new Animal(0,"lion","animal");}
+    private Animal setupAnimal(){return new Animal(0,"lion",animalDao.RECORD_TYPE);}
 }

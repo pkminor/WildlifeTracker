@@ -106,6 +106,6 @@ public class Sql2oEndangeredAnimalDaoTest {
     }
 
     private EndangeredAnimal setupEndangeredAnimal(){
-        return new EndangeredAnimal(0,"elephant","endangered","weak","old");
+        return new EndangeredAnimal(0,"elephant",endangeredAnimalDao.RECORD_TYPE,"weak","old");
     }
 }
