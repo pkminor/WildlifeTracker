@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>WildLife Tracker</title>
+    
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+      .left { width:20%;position:fixed;top:0;left:0;height:100%;overflow:auto;background-color: aliceblue; }
+      .right { width:10%;position:fixed;top:0;right:0;height:100%;overflow:auto;background-color: aliceblue; }
+      .content { width:70%;margin:0 10% 0 20%; }
+      body { background-color: #EBEFF2; user-select:none;font-family: "Trebuchet MS", Helvetica, sans-serif; }
+      .vr-round {font-family: 'Varela Round', sans-serif;}
+      li {list-style-type: none;}
+      @media screen and (max-width:500px){ .content{width:100%} .left, .right {display:none;} }
+
+      /* width */
+      ::-webkit-scrollbar {  width: 5px;}
+      /* Track */
+      ::-webkit-scrollbar-track {
+          box-shadow: inset 0 0 5px yellow; 
+          border-radius: 10px;
+       }
+
+       /* Handle */
+       ::-webkit-scrollbar-thumb {
+           background: #5cb85c; 
+           border-radius: 10px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {   background: #5cb85c; }
+    </style>
+</head>
+<body>
+
+  <div class="left">
+      <div class="shadow vr-round bg-dark text-white font-weight-bolder p-3 mb-1 sticky-top">Categories</div>
+
+      <div class="px-2 pt-3"></div>
+      <ul>       
+       <li class="p-1 mb-1"> <a href="/wildlife" class="text-dark font-weight-bolder">All WildLife</a> </li>
+       <li class="p-1 mb-1"> <a href="/animals" class="text-dark font-weight-bolder">Animals</a> </li>
+       <li class="p-1 mb-1"> <a href="/endangered" class="text-dark font-weight-bolder">Endangered</a> </li>
+       <li class="p-1 mb-1"> <a href="/sightings" class="text-dark font-weight-bolder">Sightings</a> </li>  
+       <li class="p-1 mb-1"> <a href="/sightings/animals" class="text-dark font-weight-bolder">Sighted Animals</a> </li>
+       <li class="p-1 mb-1"> <a href="/sightings/endangered" class="text-dark font-weight-bolder">Sighted Endangered</a> </li>
+       <li class="p-1 mb-1"> <a href="/unsighted/animals" class="text-dark font-weight-bolder">Unsighted Animals</a> </li>
+       <li class="p-1 mb-1"> <a href="/unsighted/endangered" class="text-dark font-weight-bolder">Unsighted Endangered</a> </li>       
+      </ul>
+      </div>
+  </div><!-- End Left-->
+
+  <div class="content">
+    <div class="shadow p-3 sticky-top font-weight-bolder bg-dark text-white vr-round">
+      WildLife Tracker
+    </div>
+
+    <div class="container pt-3">
+        <div class="row">
+            <div class="col-6">
+                <form action="/animals/new" method="POST">
+                  <div class="row m-1">
+                  <div class="input-group">
+                      <input type="text" name="animal" id="animal" class="form-control" placeholder="Add animal....">
+                      <div class="input-group-append">
+                          <div class="input-group-text bg-dark">
+                              <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="endangered" name="endangered">
+                              <label class="custom-control-label text-white font-weight-bolder" for="endangered">Endangered Animal?</label>
+                              </div>
+                          </div>
+                      </div>                      
+                  </div>                 
+                  </div>
+
+                  <div class="row m-1">                      
+                          <div class="input-group">
+                              <div class="input-group-prepend">
+                                  <button class="btn btn-success font-weight-bolder text-white">Health</button>
+                              </div>
+                              <select name="health" id="health" class="form-control">
+                                  <option value="healthy">Healthy</option>
+                                  <option value="okay">Okay</option>
+                                  <option value="ill">Ill</option>
+                              </select>
+                          </div>
+                  </div>
+
+                  <div class="row m-1">
+                          <div class="input-group">
+                              <div class="input-group-prepend">
+                                  <button class="btn btn-success text-white font-weight-bolder">Age</button>
+                              </div>
+                              <select name="age" id="age" class="form-control">
+                                  <option value="newborn">Newborn</option>
+                                  <option value="young">Young</option>
+                                  <option value="adult">Adult</option>
+                              </select>
+                          </div>
+                  </div>                  
+
+                  <div class="row m-1">
+                      <button type="submit" class="btn btn-success btn-block text-weight font-weight-bolder p-2">Add Animal</button>
+                  </div>
+                </form> <!-- End Animal Form-->
+            </div>
+           
+            <div class="col-6">
+                <form action="/sightings/new" method="POST">                  
+
+                  <div class="row m-1">                      
+                          <div class="input-group">
+                              <div class="input-group-prepend">
+                                  <button class="btn btn-success font-weight-bolder text-white">Animal</button>
+                              </div>
+                              <select name="animal" id="animal" class="form-control">
+                                  <option value="healthy">Lion</option>
+                                  <option value="okay">Elephant</option>
+                                  <option value="ill">Rhino</option>
+                              </select>
+                          </div>
+                  </div>
+
+                  <div class="row m-1">
+                       <input type="text" name="location" id="location" class="form-control" placeholder="Location....">                                                                                                     
+                  </div>     
+
+                  <div class="row m-1">                 
+                      <input type="text" name="rangername" id="rangername" class="form-control" placeholder="Ranger name....">                                                                           
+                  </div>             
+
+                  <div class="row m-1">
+                      <button type="submit" class="btn btn-success btn-block text-weight font-weight-bolder p-2">Add Sighting</button>
+                  </div>
+                </form> <!-- End Sighting Form-->
+            </div>
+        </div><!-- End Forms Row-->
+
+        <hr>
+    </div><!-- End Content Container-->
+
+  </div><!-- End Content-->
+
+  <div class="right">
+
+  </div><!-- End Right-->
+</body>
+</html>
