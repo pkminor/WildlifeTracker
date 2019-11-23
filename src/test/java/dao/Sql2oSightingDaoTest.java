@@ -59,7 +59,7 @@ public class Sql2oSightingDaoTest {
         assertEquals(2, sightingDao.getAllSightings().size());
     }
 
-    @Test
+    @Test //(expected = IllegalArgumentException.class) //-> this is causing issues????
     public void findSightingById_FindsCorrectSighting_True() {
         Sighting s1 = setupSighting();
         Sighting s2 = setupSighting();
@@ -67,7 +67,14 @@ public class Sql2oSightingDaoTest {
         sightingDao.addSighting(s1);
         sightingDao.addSighting(s2);
 
-        assertEquals(s1,sightingDao.findSightingById(s1.getId()));
+        Sighting found = null;
+
+        try {
+            found = sightingDao.findSightingById(s1.getId());
+        }catch (IllegalArgumentException ex){ System.out.println(ex);}
+
+        assertEquals(s1, found);
+
     }
 
     @Test
@@ -82,7 +89,9 @@ public class Sql2oSightingDaoTest {
         String original_location=s1.getLocation();
         String original_rangername=s1.getRangername();
 
-        sightingDao.updateSighting(s1,3,"ridge","Ann");
+        try {
+            sightingDao.updateSighting(s1,3,"ridge","Ann");
+        }catch(IllegalArgumentException ex){ System.out.println(ex);}
 
         assertNotEquals(original_aid, s1.getAid());
         assertNotEquals(original_location, s1.getLocation());

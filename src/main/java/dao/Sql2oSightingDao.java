@@ -35,29 +35,41 @@ public class Sql2oSightingDao implements SightingDao {
     }
 
     @Override
-    public Sighting findSightingById(int id) {
-        String sql ="select * from sightings where id = :id ";
-        try(Connection con = sql2o.open()){
-            return con.createQuery(sql)
-                    .addParameter("id",id)
-                    .executeAndFetchFirst(Sighting.class);
+    public Sighting findSightingById(int id) throws IllegalArgumentException {
+        if(id <= 0){
+            throw new IllegalArgumentException("Sighting id provided -("+id+")-is not allowed. Should be more than zero");
+        }else{
+            String sql ="select * from sightings where id = :id ";
+            try(Connection con = sql2o.open()){
+                return con.createQuery(sql)
+                        .addParameter("id",id)
+                        .executeAndFetchFirst(Sighting.class);
+            }
         }
     }
 
     @Override
-    public void updateSighting(Sighting sighting, int aid, String location, String rangername) {
-        String sql ="update sightings set (aid,location,rangername) = (:aid,:location,:rangername)  where id = :id";
-        try(Connection con = sql2o.open()){
-            con.createQuery(sql)
-                    .addParameter("aid",aid)
-                    .addParameter("location",location)
-                    .addParameter("rangername",rangername)
-                    .addParameter("id",sighting.getId())
-                    .executeUpdate();
+    public void updateSighting(Sighting sighting, int aid, String location, String rangername) throws IllegalArgumentException {
 
-            sighting.setAid(aid);
-            sighting.setLocation(location);
-            sighting.setRangername(rangername);
+        if( aid <= 0 || location.equals("") || rangername.equals("")){
+            String err = aid<=0 ? " /aid ("+aid+") " : "";
+            err += location.equals("") ? " /location ("+location+") " : "";
+            err += rangername.equals("") ? " /rangername ("+rangername+") ": "";
+            throw new IllegalArgumentException("Arguments: " +err +", provided are not allowed. Violates rules: aid>0, location!='', rangername!=''");
+        }else{
+            String sql ="update sightings set (aid,location,rangername) = (:aid,:location,:rangername)  where id = :id";
+            try(Connection con = sql2o.open()){
+                con.createQuery(sql)
+                        .addParameter("aid",aid)
+                        .addParameter("location",location)
+                        .addParameter("rangername",rangername)
+                        .addParameter("id",sighting.getId())
+                        .executeUpdate();
+
+                sighting.setAid(aid);
+                sighting.setLocation(location);
+                sighting.setRangername(rangername);
+            }
         }
 
     }
