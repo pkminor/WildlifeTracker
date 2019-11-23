@@ -30,12 +30,54 @@ public class Sql2oSightingDao implements SightingDao {
     }
 
     @Override
+    public List<Sighting> getAnimalSightings() {
+        List<Animal> animals = animalDao.getAllAnimals();
+        return getAllSightings().stream()
+                .filter(s->animals.contains(animalDao.findAnimalById(s.getAid())))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Sighting> getEndangeredAnimalSightings() {
+        List<EndangeredAnimal> endangeredAnimals = endangeredAnimalDao.getAllEndangeredAnimals();
+        return getAllSightings().stream()
+                .filter(s->endangeredAnimals.contains(endangeredAnimalDao.findEndangeredAnimalById(s.getAid())))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Animal> getAllWildlife() {
+        List<Animal> wildlife = new ArrayList<>();
+        wildlife.addAll(animalDao.getAllAnimals());
+        wildlife.addAll(endangeredAnimalDao.getAllEndangeredAnimals());
+
+        return wildlife;
+    }
+
+    @Override
+    public List<Animal> getSightedWildlife() {
+        List<Animal> sightedWildlife = new ArrayList<>();
+        sightedWildlife.addAll(getSightedAnimals());
+        sightedWildlife.addAll(getSightedEndangeredAnimals());
+
+        return sightedWildlife;
+    }
+
+    @Override
+    public List<Animal> getUnsightedWildlife() {
+        List<Animal> unSightedWildlife = new ArrayList<>();
+        unSightedWildlife.addAll(getUnsightedAnimals());
+        unSightedWildlife.addAll(getUnsightedEndangeredAnimals());
+
+        return unSightedWildlife;
+    }
+
+    @Override
     public List<Animal> getSightedAnimals() {
 
          //sightings have animals and endangered animal objects. animalDao will only find animal objects
         //retain only animal object sightings before mapping with animalDao
-        return getAllSightings().stream()
-                .filter(s -> animalDao.findAnimalById(s.getAid()) !=null )
+        return getAnimalSightings().stream()
                 .map(s -> animalDao.findAnimalById(s.getAid()))
                 .collect(Collectors.toList());
 
@@ -62,8 +104,7 @@ public class Sql2oSightingDao implements SightingDao {
 
         //sightings have animals and endangered animal objects. endangeredAnimalDao will only find endangered animal objects
         //retain only endangered animal object sightings before mapping with endangeredAnimalDao
-        return getAllSightings().stream()
-                .filter(s -> endangeredAnimalDao.findEndangeredAnimalById(s.getAid()) !=null )
+        return getEndangeredAnimalSightings().stream()
                 .map(s -> endangeredAnimalDao.findEndangeredAnimalById(s.getAid()))
                 .collect(Collectors.toList());
 

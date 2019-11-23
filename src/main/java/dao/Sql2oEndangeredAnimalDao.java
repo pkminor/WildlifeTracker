@@ -42,7 +42,7 @@ public class Sql2oEndangeredAnimalDao implements EndangeredAnimalDao {
 
     @Override
     public EndangeredAnimal findEndangeredAnimalById(int id) {
-        String sql ="select * from animals where id= :id ";
+        String sql ="select * from animals where id = :id ";
         try(Connection con = sql2o.open()){
             return con.createQuery(sql)
                     .addParameter("id",id)

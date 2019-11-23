@@ -1,6 +1,7 @@
 package models;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 public class Sighting {
@@ -43,8 +44,8 @@ public class Sighting {
     public void setRangername(String rangername) {
         this.rangername = rangername;
     }
-    public Timestamp getSightdate() {
-        return sightdate;
+    public String getSightdate() {
+        return new SimpleDateFormat("dd MMMM yyyy").format(sightdate);
     }
     public void setSightdate(Timestamp sightdate) {
         this.sightdate = sightdate;

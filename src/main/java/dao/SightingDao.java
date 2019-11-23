@@ -8,6 +8,12 @@ import java.util.List;
 
 public interface SightingDao {
     List<Sighting> getAllSightings();
+    List<Sighting> getAnimalSightings();
+    List<Sighting> getEndangeredAnimalSightings();
+
+    List<Animal> getAllWildlife();
+    List<Animal> getSightedWildlife();
+    List<Animal> getUnsightedWildlife();
 
     List<Animal> getSightedAnimals();
     List<Animal> getUnsightedAnimals();
