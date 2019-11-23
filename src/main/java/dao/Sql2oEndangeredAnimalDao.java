@@ -11,6 +11,9 @@ public class Sql2oEndangeredAnimalDao implements EndangeredAnimalDao {
     private final Sql2o sql2o;
     public static final String RECORD_TYPE = "endangered";
 
+    public enum HEALTHSTATUS {HEALTHY,ILL,OKAY};
+    public enum AGESTATUS {NEWBOARD,YOUNG,ADULT};
+
     public Sql2oEndangeredAnimalDao(Sql2o sql2o) {
         this.sql2o=sql2o;
     }
