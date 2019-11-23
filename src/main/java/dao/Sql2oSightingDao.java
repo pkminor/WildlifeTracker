@@ -128,10 +128,13 @@ public class Sql2oSightingDao implements SightingDao {
 
     @Override
     public void addSighting(Sighting sighting) {
-        String sql = "insert into sightings (aid,location,rangername,sightdate) values (:aid, :location, :rangername, :sightdate)";
+        String sql = "insert into sightings (aid,location,rangername,sightdate) values (:aid, :location, :rangername, now())";
         try(Connection con = sql2o.open()){
             int id = (int) con.createQuery(sql,true)
-                    .bind(sighting)
+                    //.bind(sighting)
+                    .addParameter("aid",sighting.getAid())
+                    .addParameter("location",sighting.getLocation())
+                    .addParameter("rangername",sighting.getRangername())
                     .executeUpdate()
                     .getKey();
 
