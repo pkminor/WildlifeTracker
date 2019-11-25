@@ -147,14 +147,20 @@
 
         {{#if data}}
            {{#each data}}
-           <div class="shadow bg-white mb-2 p-2">
-               AID {{id}} - Name {{name}} - Type {{type}}
+           <div class="shadow bg-white mb-2 p-2">               
+               <div class="card-title"><span class="badge  text-white p-2 badge-dark">Animal ID {{id}}</span></div>
+               <div class="card-text">{{name}}</div>
+               <hr>
+               <div class="card-text"><span class="badge badge-pill text-white p-2 badge-info">{{type}}</span></div>               
            </div>
         {{/each}}
         {{else}}
         {{#each sightings}}
            <div class="shadow bg-white mb-2 p-2">
-               SID {{id}} -  AnimalID {{aid}} - Location {{location}} - Ranger {{rangername}} - Date {{sightdate}}
+               <div class="card-title"><span class="badge text-white p-2 badge-dark">Sighting ID {{id}}</span></div>
+               <div class="card-text">Animal ID {{aid}} </div>
+               <div class="card-text">Spotted at {{location}} by {{rangername}}</div>
+               <div class="card-footer">On {{sightdate}}</div>                
            </div>
         {{/each}}
         {{/if}}
