@@ -13,6 +13,11 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.sql.Timestamp;
 import java.util.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static spark.Spark.*;
 
 public class App {
@@ -20,14 +25,15 @@ public class App {
     private static Sql2oSightingDao sightingDao;
     private static Sql2oAnimalDao animalDao;
     private static Sql2oEndangeredAnimalDao endangeredAnimalDao;
+    private static URI dbUri;
+    private static Logger logger = LoggerFactory.getLogger(App.class);
 
     public static void main(String[] args) {
         ProcessBuilder process = new ProcessBuilder();
         Integer port;
 
         // This tells our app that if Heroku sets a port for us, we need to use that port.
-        // Otherwise, if they do not, continue using port 4567.
-
+        // Otherwise, if they do not, continue using port 4567 or 7654.
         if (process.environment().get("PORT") != null) {
             port = Integer.parseInt(process.environment().get("PORT"));
         } else {
@@ -37,7 +43,27 @@ public class App {
         port(port);
 
         String connectionStr="jdbc:postgresql://localhost:5432/wildlife_tracker";
-        sql2o = new Sql2o(connectionStr,"pkminor","password");
+
+        try {
+            if (System.getenv("DATABASE_URL") == null) {
+                dbUri = new URI("postgres://localhost:5432/wildlife_tracker");
+                sql2o = new Sql2o(connectionStr,"pkminor","password");
+
+            } else {
+
+                dbUri = new URI(System.getenv("DATABASE_URL"));
+                int dbport = dbUri.getPort();
+                String host = dbUri.getHost();
+                String path = dbUri.getPath();
+                String username = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[0];
+                String password = (dbUri.getUserInfo() == null) ? null : dbUri.getUserInfo().split(":")[1];
+                sql2o = new Sql2o("jdbc:postgresql://" + host + ":" + dbport + path, username, password);
+            }
+
+        } catch (URISyntaxException e ) {
+            logger.error("Unable to connect to database.");
+        }
+
         sightingDao = new Sql2oSightingDao(sql2o);
         animalDao = new Sql2oAnimalDao(sql2o);
         endangeredAnimalDao =  new Sql2oEndangeredAnimalDao(sql2o);
