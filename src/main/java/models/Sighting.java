@@ -59,12 +59,11 @@ public class Sighting {
         return id == sighting.id &&
                 aid == sighting.aid &&
                 Objects.equals(location, sighting.location) &&
-                Objects.equals(rangername, sighting.rangername) &&
-                Objects.equals(sightdate, sighting.sightdate);
+                Objects.equals(rangername, sighting.rangername) ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, aid, location, rangername, sightdate);
+        return Objects.hash(id, aid, location, rangername);
     }
 }
