@@ -68,11 +68,11 @@
                 <form action="/animals/new" method="POST">
                   <div class="row m-1">
                   <div class="input-group">
-                      <input type="text" name="animal" id="animal" class="form-control" placeholder="Type animal....">
+                      <input type="text" name="animal" id="animal" class="form-control border-0" placeholder="Type animal....">
                       <div class="input-group-append">
                           <div class="input-group-text bg-dark">
                               <div class="custom-control custom-checkbox">
-                              <input type="checkbox" value="endangered" class="custom-control-input" id="endangered" name="endangered">
+                              <input type="checkbox" value="endangered" class="custom-control-input border-0" id="endangered" name="endangered">
                               <label class="custom-control-label text-white font-weight-bolder" for="endangered">Endangered Animal?</label>
                               </div>
                           </div>
@@ -85,7 +85,7 @@
                               <div class="input-group-prepend">
                                   <button class="btn btn-success font-weight-bolder text-white">Health</button>
                               </div>
-                              <select name="health" id="health" class="form-control">
+                              <select name="health" id="health" class="form-control border-0">
                                   <option value="healthy">Healthy</option>
                                   <option value="okay">Okay</option>
                                   <option value="ill">Ill</option>
@@ -98,7 +98,7 @@
                               <div class="input-group-prepend">
                                   <button class="btn btn-success text-white font-weight-bolder">Age</button>
                               </div>
-                              <select name="age" id="age" class="form-control">
+                              <select name="age" id="age" class="form-control border-0">
                                   <option value="newborn">Newborn</option>
                                   <option value="young">Young</option>
                                   <option value="adult">Adult</option>
@@ -120,7 +120,7 @@
                               <div class="input-group-prepend">
                                   <button class="btn btn-success font-weight-bolder text-white">Animal</button>
                               </div>
-                              <select name="animal" id="animal" class="form-control">
+                              <select name="animal" id="animal" class="form-control border-0">
                                   {{#each wildlife}}
                                      <option value="{{id}}">{{id}} - {{name}}</option> 
                                   {{/each}}                                 
@@ -129,11 +129,11 @@
                   </div>
 
                   <div class="row m-1">
-                       <input type="text" name="location" id="location" class="form-control" placeholder="Type location....">                                                                                                     
+                       <input type="text" name="location" id="location" class="form-control border-0" placeholder="Type location....">
                   </div>     
 
                   <div class="row m-1">                 
-                      <input type="text" name="rangername" id="rangername" class="form-control" placeholder="Type ranger name....">                                                                           
+                      <input type="text" name="rangername" id="rangername" class="form-control border-0" placeholder="Type ranger name....">
                   </div>             
 
                   <div class="row m-1">
