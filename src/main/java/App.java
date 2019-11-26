@@ -177,6 +177,8 @@ public class App {
             req.session().attribute("sightings",null);
         }
 
+        Collections.sort(req.session().attribute("wildlife"));
+
         model.put("routes",req.session().attribute("categoryRoutes"));
         model.put("data",req.session().attribute("data"));   //this to be set correctly in other category routes
         model.put("wildlife",req.session().attribute("wildlife")); //only chnages if adding new animal/endangered

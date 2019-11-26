@@ -3,7 +3,7 @@ package models;
 import java.util.Comparator;
 import java.util.Objects;
 
-public class Animal implements Comparator<Animal> {
+public class Animal implements Comparator<Animal>,  Comparable<Animal> {
     private int id;
     private String name;
     private String type;
@@ -50,5 +50,10 @@ public class Animal implements Comparator<Animal> {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, type);
+    }
+
+    @Override
+    public int compareTo(Animal animal) {
+        return this.getId() - animal.getId();
     }
 }
