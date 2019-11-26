@@ -1,8 +1,9 @@
 package models;
 
+import java.util.Comparator;
 import java.util.Objects;
 
-public class Animal {
+public class Animal implements Comparator<Animal> {
     private int id;
     private String name;
     private String type;
@@ -30,6 +31,11 @@ public class Animal {
     }
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public int compare(Animal animal, Animal t1) {
+        return animal.id - t1.id;
     }
 
     @Override
